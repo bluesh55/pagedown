@@ -1090,6 +1090,15 @@ else
                 }
             );
 
+            // ``` ``` code block
+            text = text.replace(/```\n([\s\S]+?)\n```/gm, function(whole, codeblock) {
+              codeblock = _EncodeCode(_Outdent(codeblock));
+              codeblock = _Detab(codeblock);
+              codeblock = codeblock.replace(/^\n+/g, ""); // trim leading newlines
+              codeblock = codeblock.replace(/\n+$/g, ""); // trim trailing whitespace
+              return "\n<pre><code>" + codeblock +"</code></pre>\n";
+            });
+
             // attacklab: strip sentinel
             text = text.replace(/~0/, "");
 
